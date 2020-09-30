@@ -25,7 +25,7 @@ orderRouter.get('/complete/:id', async (req, res) => {
 })
 
 async function connect() {
-    return client = await mongodb.MongoClient.connect('mongodb+srv://filippoDB:filippoDB@cluster0.ghzdf.mongodb.net/atroosdb?retryWrites=true&w=majority', {
+    return client = await mongodb.MongoClient.connect(process.env.MONGO_URI, {
         useNewUrlParser: true, useUnifiedTopology: true
     }
     );
