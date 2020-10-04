@@ -13,6 +13,7 @@
       <button @click="payNow" class="pay" id="pay-now">💸 PAGA ORA</button>
       <div class="break"></div>
       <div id="thank-you"></div>
+      <button @click="backHome" id="back-home">🧭 Torna alla home</button>
     </div>
   </div>
 </template>
@@ -84,25 +85,32 @@ export default {
         }
       }
     },
-    payNow() {
+    async payNow() {
+      document.getElementById("pay-now").disabled = true;
       let txt = `Grazie per l'acquisto! <div class="break"></div>`;
       for (let i = 0; i < this.finalOrder.length; i++) {
         let name =
           this.finalOrder[i].name.charAt(0).toUpperCase() +
           this.finalOrder[i].name.slice(1);
-        txt += name + ": €" + this.finalOrder[i].tot + `<div class="break"></div>`;
+        txt +=
+          name + ": €" + this.finalOrder[i].tot + `<div class="break"></div>`;
       }
-
       txt += `Per un totale di €${this.totalCart}`;
       document.getElementById("pay-now").innerHTML = "";
       document.getElementById("pay-now").classList.add("loading");
-      setTimeout(() => {
-        document.getElementById("thank-you").style.display = "block";
-        document.getElementById("thank-you").innerHTML = txt;
-        document.getElementById("pay-now").classList.remove("loading");
-        document.getElementById("pay-now").innerHTML = "🎉 Grazie!";
-        // OrdersController.complete(this.user)
-      }, 2000);
+      let obj = {
+        id: this.user,
+        order: this.finalOrder,
+      };
+      await OrdersController.complete(obj);
+      document.getElementById("thank-you").style.display = "block";
+      document.getElementById("thank-you").innerHTML = txt;
+      document.getElementById("pay-now").classList.remove("loading");
+      document.getElementById("pay-now").innerHTML = "🎉 Grazie!";
+      document.getElementById("back-home").style.display = "block";
+    },
+    backHome() {
+      window.location.href = "http://localhost:8080";
     },
   },
 };
@@ -137,7 +145,8 @@ export default {
 .break {
   width: 100%;
 }
-.pay {
+.pay,
+#back-home {
   cursor: pointer;
   margin: 10px;
   outline: none;
@@ -161,6 +170,10 @@ export default {
 .loading:after {
   content: " .";
   animation: dots 1s steps(5, end) infinite;
+}
+
+#back-home {
+  display: none;
 }
 
 @keyframes dots {

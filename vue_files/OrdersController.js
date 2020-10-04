@@ -21,7 +21,7 @@ class OrdersController {
             try {
                 let url = 'orders/article' + `/${id}`
                 const res = await axios.get(url)
-                const data  = res.data
+                const data = res.data
                 resolve(data)
             } catch (err) {
                 reject(err)
@@ -29,12 +29,12 @@ class OrdersController {
         })
     }
 
-    static complete(id) {
+    static complete(obj) {
         return new Promise(async (resolve, reject) => {
             try {
-                let url = 'orders/complete' + `/${id}`
-                const res = await axios.get(url)
-                const data = res.data;
+                let url = 'orders/complete'
+                const res = await axios.post(url, obj)
+                const data = res.data
                 resolve(data)
             } catch (err) {
                 reject(err)
