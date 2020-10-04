@@ -17,14 +17,6 @@ orderRouter.get('/article/:id', async (req, res) => {
     res.send(await data.findOne({ "_id": new mongodb.ObjectID(req.params.id) }))
 })
 
-// orderRouter.get('/complete/:id', async (req, res) => {
-//     const client = await connect();
-//     data = client.db('CheckoutDB').collection('orders')
-//     let query = { "user": new mongodb.ObjectID(req.params.id) }
-//     let changes = { $set: { status: 'completed' } }
-//     res.send(await data.updateOne(query, changes))
-// })
-
 orderRouter.post('/complete/', async (req, res) => {
     let size = req.body.order.length
     for (let i = 0; i < size; i++) {
