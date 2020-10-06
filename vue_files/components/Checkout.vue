@@ -8,12 +8,14 @@
     </ul>
 
     <div class="pay-div">
-      Totale ordine: {{ totalCart }}€
+      Totale ordine: <span id="total-cart"> {{ totalCart }}</span
+      >€
       <div class="break"></div>
       <button @click="payNow" class="pay" id="pay-now">💸 PAGA ORA</button>
       <div class="break"></div>
       <div id="thank-you"></div>
-      <button @click="backHome" id="back-home">🧭 Torna alla home</button>
+      <div><button @click="backHome" id="back-home">🧭 Torna alla home</button></div>
+      
     </div>
   </div>
 </template>
@@ -110,7 +112,7 @@ export default {
       document.getElementById("back-home").style.display = "block";
     },
     backHome() {
-      window.location.href = "http://localhost:8080";
+      location.reload();
     },
   },
 };
@@ -121,6 +123,7 @@ export default {
   display: flex;
   justify-content: center;
   text-align: center;
+  letter-spacing: 2px;
 }
 .article {
   list-style-type: none;
@@ -132,6 +135,7 @@ export default {
 .article li {
   text-align: center;
   padding: 15px;
+  margin: 5px;
   border: 0.5pt solid #232323;
   border-radius: 5px;
 }
@@ -174,6 +178,10 @@ export default {
 
 #back-home {
   display: none;
+}
+
+#total-cart {
+  font-size: 19px;
 }
 
 @keyframes dots {

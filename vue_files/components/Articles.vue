@@ -4,7 +4,7 @@
     <p> Quantità: {{ article.qty }}/{{ detail.available_quantity }}</p>
     <button @click="addOne" class="btn">➕</button>
     <button @click="removeOne" class="btn">➖</button>
-    <p>Subtotale articolo: {{ detail.price * article.qty }}</p>
+    <p>Subtotale articolo: €{{ detail.price * article.qty }}</p>
   </div>
 </template>
 
